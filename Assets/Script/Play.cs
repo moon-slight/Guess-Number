@@ -7,8 +7,8 @@ using UnityEngine.SceneManagement;
 public class Play : MonoBehaviour 
 {
 
-	public Button Exit, Yes, No;
 	public GameObject ExitPanel;
+	public InputField Input;
 	private string Answer = "";
 	private string Hint;
 	protected string Guess;
@@ -18,19 +18,13 @@ public class Play : MonoBehaviour
 	{
 		//set button state
 		ExitPanel.SetActive (false);
-		Exit.onClick.AddListener (ExitOnClick);
-		Yes.onClick.AddListener (YesOnClick);
-		No.onClick.AddListener (NoOnClick);
 
-		int i = 0, RandNum;
-		while (i < 4) 
+		int RandNum;
+		while (Answer.Length < 4) 
 		{
 			RandNum = Random.Range (0, 9);
 			if (CheckIsRepeat (RandNum, Answer.Length)) 
-			{
 				Answer = Answer + RandNum.ToString ();
-				i++;
-			}
 		}
 		Debug.Log (Answer);
 	}
@@ -38,6 +32,7 @@ public class Play : MonoBehaviour
 	// Update is called once per frame
 	void Update () 
 	{
+		TouchScreenKeyboard.Open("", TouchScreenKeyboardType.NumberPad, true, false, true);
 		
 	}
 
@@ -51,19 +46,19 @@ public class Play : MonoBehaviour
 		return true;
 	}
 
-	void ExitOnClick()
+	public void ExitOnClick()
 	{
 		ExitPanel.SetActive (true);
 		Debug.Log ("exit\n");
 	}
 
-	void YesOnClick()
+	public void YesOnClick()
 	{
 		SceneManager.LoadScene ("MainMenu", LoadSceneMode.Single);
 		Debug.Log ("yes\n");
 	}
 
-	void NoOnClick()
+	public void NoOnClick()
 	{
 		ExitPanel.SetActive (false);
 		Debug.Log ("no\n");
