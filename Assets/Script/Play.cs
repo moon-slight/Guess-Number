@@ -23,8 +23,12 @@ public class Play : MonoBehaviour
 		while (Answer.Length < 4) 
 		{
 			RandNum = Random.Range (0, 9);
-			if (CheckIsRepeat (RandNum, Answer.Length)) 
+
+			if (CheckIsRepeat (RandNum, Answer.Length, Answer)) 
+			{
 				Answer = Answer + RandNum.ToString ();
+				Debug.Log ("Answer: " + Answer);
+			}
 		}
 		Debug.Log (Answer);
 	}
@@ -36,16 +40,32 @@ public class Play : MonoBehaviour
 		
 	}
 
-	bool CheckIsRepeat(int checknum, int length)
+	bool CheckIsRepeat(int checknum, int length, string targetnum)
 	{
 		for(int i = 0; i < length; i++)
 		{
-			if (checknum == Answer [i])
+			if ( checknum == (System.Convert.ToInt32(targetnum[i] - 48)) ) //change targetnum from string to int
 				return false;
 		}
 		return true;
 	}
 
+	public void InputOnClick()
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			for (int k = i + 1; k < 4; k++)
+			{
+				if ( ((System.Convert.ToInt32 (Input.text [i]) - 48) == (System.Convert.ToInt32 (Input.text[k]) - 48)) )
+				{
+					Debug.Log ("wrong");
+					Debug.Log ("input[i]: " + (System.Convert.ToInt32 (Input.text [i]) - 48));
+				}
+			}
+		}
+		Debug.Log ("right");
+	}
+	
 	public void ExitOnClick()
 	{
 		ExitPanel.SetActive (true);
@@ -62,5 +82,10 @@ public class Play : MonoBehaviour
 	{
 		ExitPanel.SetActive (false);
 		Debug.Log ("no\n");
+	}
+
+	public void AnalyseHint(string GuessNum, string Answer)
+	{
+
 	}
 }
