@@ -289,7 +289,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 84669881}
-        m_MethodName: HelpOnClick
+        m_MethodName: ShowHelpPanel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -806,7 +806,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 84669881}
-        m_MethodName: BackOnClick
+        m_MethodName: CloseHelpPanel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -996,7 +996,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 84669881}
-        m_MethodName: ExitOnClick
+        m_MethodName: ExitGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1267,7 +1267,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 84669881}
-        m_MethodName: PlayOnClick
+        m_MethodName: GoToPlay
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

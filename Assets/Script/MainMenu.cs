@@ -14,25 +14,25 @@ public class MainMenu : MonoBehaviour
 		HelpPanel.SetActive (false);
 	}
 
-	public void PlayOnClick()
+	public void GoToPlay()
 	{
 		SceneManager.LoadScene ("Play", LoadSceneMode.Single);
 		Debug.Log ("play\n");
 	}
 
-	public void HelpOnClick()
+	public void ShowHelpPanel()
 	{
 		HelpPanel.SetActive (true);
 		Debug.Log ("help\n");
 	}
 
-	public void ExitOnClick()
+	public void ExitGame()
 	{
 		Application.Quit ();
 		Debug.Log ("exit\n");
 	}
 
-	public void BackOnClick()
+	public void CloseHelpPanel()
 	{
 		HelpPanel.SetActive (false);
 		Debug.Log ("back\n");

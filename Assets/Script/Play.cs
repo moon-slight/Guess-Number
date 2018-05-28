@@ -8,27 +8,30 @@ public class Play : MonoBehaviour
 {
 
 	public GameObject ExitPanel;
+	public GameObject WarningPanel;
+	public GameObject WinPanel;
 	public InputField Input;
+	public Text ShowHint = null;
+
 	private string Answer = "";
-	private string Hint;
+	private string Hint = "";
 	protected string Guess;
 
 	// Use this for initialization
 	void Start () 
 	{
-		//set button state
+		//set panel state
 		ExitPanel.SetActive (false);
+		WarningPanel.SetActive (false);
+		WinPanel.SetActive (false);
 
 		int RandNum;
 		while (Answer.Length < 4) 
 		{
 			RandNum = Random.Range (0, 9);
 
-			if (CheckIsRepeat (RandNum, Answer.Length, Answer)) 
-			{
+			if (CheckIsRepeat (RandNum, Answer.Length, Answer))
 				Answer = Answer + RandNum.ToString ();
-				Debug.Log ("Answer: " + Answer);
-			}
 		}
 		Debug.Log (Answer);
 	}
@@ -50,42 +53,76 @@ public class Play : MonoBehaviour
 		return true;
 	}
 
+	public void AnalyseHint(string GuessNum, string Answer) //show player hint (how many A and B)
+	{
+		int A = 0, B = 0;
+		for (int i = 0; i < 4; i++)
+		{
+			for (int k = 0; k < 4; k++)
+			{
+				if (GuessNum [i] == Answer [k] && i == k)
+					A++;
+				else if (GuessNum [i] == Answer [k])
+					B++;
+			}
+		}
+		Hint = Hint + GuessNum + "  " + A + "A" + B + "B\n";
+		ShowHint.text = Hint;
+
+		if (A == 4)
+			WinPanel.SetActive (true);
+	}
+
+	// below are different actions when click different buttons
 	public void InputOnClick()
 	{
-		for (int i = 0; i < 4; i++)
+		bool GoOn = true;
+		for (int i = 0; i < 4 && GoOn; i++)
 		{
 			for (int k = i + 1; k < 4; k++)
 			{
 				if ( ((System.Convert.ToInt32 (Input.text [i]) - 48) == (System.Convert.ToInt32 (Input.text[k]) - 48)) )
 				{
 					Debug.Log ("wrong");
-					Debug.Log ("input[i]: " + (System.Convert.ToInt32 (Input.text [i]) - 48));
+					WarningPanel.SetActive (true);
+					GoOn = false;
+					break;
 				}
 			}
 		}
-		Debug.Log ("right");
+		if (GoOn)
+		{
+			Debug.Log ("right");
+			AnalyseHint (Input.text, Answer);
+		}
 	}
-	
-	public void ExitOnClick()
+
+	public void CloseWarningPanle()
+	{
+		WarningPanel.SetActive (false);
+		Debug.Log ("ok\n");
+	}
+
+	public void ShowExitPanel()
 	{
 		ExitPanel.SetActive (true);
 		Debug.Log ("exit\n");
 	}
 
-	public void YesOnClick()
+	public void GoToMainMenu()
 	{
 		SceneManager.LoadScene ("MainMenu", LoadSceneMode.Single);
 		Debug.Log ("yes\n");
 	}
 
-	public void NoOnClick()
+	public void CloseExitPanel()
 	{
 		ExitPanel.SetActive (false);
 		Debug.Log ("no\n");
 	}
 
-	public void AnalyseHint(string GuessNum, string Answer)
+	public void Again()
 	{
-
+		SceneManager.LoadScene ("Play", LoadSceneMode.Single);
 	}
 }
